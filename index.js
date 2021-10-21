@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 import mongoose from "mongoose"
 import multer from "multer"
 import routes from "./routes.js";
-
+import cors from "cors"
 
 dotenv.config()
 const port = process.env.PORT||"3333"
@@ -18,13 +18,14 @@ const storage = multer.diskStorage({
     },
   });
 
-  const upload = multer({ storage: storage });
-  app.post("/api/upload", upload.single("file"), (req, res) => {
-    res.status(200).json("File has been uploaded");
-  });
 
 const app = express()
 
+const upload = multer({ storage: storage });
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  res.status(200).json("File has been uploaded");
+});
+app.use(cors())
 app.use(express.json());
 app.use(routes);
 app.listen(port,()=>{
