@@ -19,12 +19,13 @@ const storage = multer.diskStorage({
   });
 
 
-const app = express()
 
+const app = express()
 const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
+
 app.use(cors())
 app.use(express.json());
 app.use(routes);
